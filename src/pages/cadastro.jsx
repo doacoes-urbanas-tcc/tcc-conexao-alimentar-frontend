@@ -11,7 +11,7 @@ const schema = yup
         email: yup.string().email.required("O email é obrigatório"),
         password: yup.string().min(6, "A senha deve ter pelo menos 6 dígitos").required("A senha é obrigatória "),
         confirmPassword: yup.string().required("Confirmar a senha é obrigatório").oneOf([yup.ref("password")], "As senhas devem ser iguais"),
-        number: yup.string().min(11, "O número de telefone precisa conter 11 dígitos").max(11).required("O número de telefone é obrigatório"),
+        phoneNumber: yup.string().min(11, "O número de telefone precisa conter 11 dígitos").max(11).required("O número de telefone é obrigatório"),
         CPF: yup.string().min(11, "O CPF deve ter pelo menos 11 dígitos").max(11).required("O CPF é obrigatório"),
         CEP: yup.string().min(8, "O CEP deve ter pelo menos 8 dígitos").max(8).required("O CEP é obrigatório"),
     })
@@ -41,7 +41,7 @@ function cadastro() {
             </label>
             <label>
                 Telefone Celular
-                <input type="text" ref={withMask('(99)99999-9999')} {...register("number")} />
+                <input type="text" ref={withMask('(99)99999-9999')} {...register("phoneNumber")} />
                 <span class="position absolute top-50px text-red-500">{errors.number?.message}</span>
             </label>
             <label>
@@ -51,7 +51,7 @@ function cadastro() {
             </label>
             <label>
                 CEP
-                <input type="text" ref={withMask('99999-999')} {...register("CEP")} />
+                <input type="text" ref={withMask('99999-999')} onBlur={handleZipCodBlur} {...register("CEP")} />
                 <span class="position absolute top-50px text-red-500">{errors.CEP?.message}</span>
             </label>
             <label>
@@ -64,7 +64,8 @@ function cadastro() {
                 <input type="password"{...register("confirmPassword")} />
                 <span class="position absolute top-50px text-red-500">{errors.confirmPassword?.message}</span>
             </label>
-            <button type="submit">Cadastrar-se</button>
+            <button type="submit">Cadastrar-se
+            </button>
         </form>
     )
 }
